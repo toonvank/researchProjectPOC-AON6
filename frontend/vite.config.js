@@ -14,12 +14,6 @@ export default defineConfig({
     }
   },
   server: {
-    proxy: {
-      '/api/notes/': {
-        target: 'http://84.195.205.124:8080',
-        changeOrigin: true,
-        secure: false // This disables SSL certificate verification
-      }
-    }
-  }
+    https: false,
+  },
 })
