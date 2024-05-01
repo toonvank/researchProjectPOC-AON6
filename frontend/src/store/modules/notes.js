@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import { ref } from 'vue';
 
-const url = ref(import.meta.env.VITE_API_BASE_URL).value;
+const url = "https://84.195.205.124:8442/api/notes/"
 console.log(url);
 
 export const notesStore = defineStore('notes', {
