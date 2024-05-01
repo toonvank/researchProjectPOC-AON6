@@ -2,7 +2,7 @@
   <div class="grid grid-cols-1 min-h-screen w-full bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 dark:from-gray-800 dark:via-gray-700 dark:to-gray-600">
     <div class="flex flex-col">
       <header class="flex h-14 items-center gap-4 border-b bg-white/40 px-4 dark:bg-black/40 md:h-[60px] md:px-6">
-        <a class="md:hidden" href="#">
+        <a class="md:hidden" href="/">
           <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
