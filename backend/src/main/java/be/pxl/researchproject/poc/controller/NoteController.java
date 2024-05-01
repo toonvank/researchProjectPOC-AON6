@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notes")
+@RequestMapping("/api/notes/")
 public class NoteController {
 
     private final NoteService noteService;
@@ -35,7 +37,7 @@ public class NoteController {
 
     @PostMapping
     public ResponseEntity<Note> createNote(@RequestBody NoteDTO noteDTO) {
-        Note note = new Note(noteDTO.getTitle(), noteDTO.getContent(), noteDTO.getDate());
+        Note note = new Note(noteDTO.getTitle(), noteDTO.getContent(), new Date());
         Note savedNote = noteService.createOrUpdateNote(note);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedNote);
     }
@@ -45,7 +47,7 @@ public class NoteController {
         return noteService.getNoteById(id).map(existingNote -> {
             existingNote.setTitle(noteDTO.getTitle());
             existingNote.setContent(noteDTO.getContent());
-            existingNote.setDate(noteDTO.getDate());
+            existingNote.setDate(new Date());
             return ResponseEntity.ok(noteService.createOrUpdateNote(existingNote));
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }

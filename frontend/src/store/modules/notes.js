@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-const url = 'http://localhost:8080/api/notes';
+const url = 'http://localhost:8080/api/notes/';
 
 export const notesStore = defineStore('notes', {
     state: () => ({
@@ -37,20 +37,32 @@ export const notesStore = defineStore('notes', {
             }
         },
         saveNewNote(title, content) {
+            console.log(title, content);
             this.error = '';
-            const note = { title, content };
-            axios.post(`${url}/add`, note)
-                .then(response => {
-                    this.notes.push(response.data);
+            axios.post(`${url}`, { title, content }, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then((response) => {
+                    if (response.status === 201) {
+                        return response.data;
+                    } else {
+                        throw new Error(`Error with status ${response.status}`);
+                    }
                 })
-                .catch(error => {
+                .then((note) => {
+                    this.notes.push(note);
+                })
+                .catch((error) => {
                     this.error = error.message;
                 });
         },
         updateNote(id, title, content) {
             this.error = '';
             const note = { title, content };
-            axios.put(`${url}/update/${id}`, note)
+            axios.put(`${url}/${id}`, note)
                 .then(response => {
                     const index = this.notes.findIndex(note => note.id === id);
                     if (index !== -1) {
@@ -63,7 +75,7 @@ export const notesStore = defineStore('notes', {
         },
         deleteNote(id) {
             this.error = '';
-            axios.delete(`${url}/delete/${id}`)
+            axios.delete(`${url}/${id}`)
                 .then(response => {
                     this.notes = this.notes.filter(note => note.id !== id);
                     Swal.fire({

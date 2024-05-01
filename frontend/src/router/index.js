@@ -7,6 +7,11 @@ const router = createRouter({
       path: '/',
       name: 'Dashboard',
       component: DashboardView
+    },
+    {
+      path: '/add-note',
+      name: 'Add Note',
+      component: () => import('../views/AddNoteView.vue')
     }
   ]
 })

@@ -5,7 +5,6 @@ import java.util.Date;
 public class NoteDTO {
     private String title;
     private String content;
-    private Date date;
 
     // Constructors, getters, and setters
 
@@ -16,7 +15,6 @@ public class NoteDTO {
     public NoteDTO(String title, String content, Date date) {
         this.title = title;
         this.content = content;
-        this.date = date;
     }
 
     // Getters and setters
@@ -34,13 +32,5 @@ public class NoteDTO {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }
