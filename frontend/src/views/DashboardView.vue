@@ -41,7 +41,6 @@
                   type="text"
                   placeholder="Search notes"
                   v-model="searchQuery"
-                  @input="filterNotes"
                   class="bg-transparent pl-10 pr-3 py-2 w-full rounded-md border border-transparent focus:ring-2 focus:ring-primary focus:ring-offset-background focus:outline-none dark:text-gray-100">
             </div>
           </form>

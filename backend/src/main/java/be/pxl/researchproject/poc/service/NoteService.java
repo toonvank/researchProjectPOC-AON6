@@ -27,7 +27,15 @@ public class NoteService {
     }
 
     public Note createOrUpdateNote(Note note) {
-        return noteRepository.save(note);
+        Optional<Note> existingNoteOptional = noteRepository.findById(note.getId());
+        if (existingNoteOptional.isPresent()) {
+            Note existingNote = existingNoteOptional.get();
+            existingNote.setTitle(note.getTitle());
+            existingNote.setContent(note.getContent());
+            return noteRepository.save(existingNote);
+        } else {
+            return noteRepository.save(note);
+        }
     }
 
     public void deleteNoteById(Long id) {

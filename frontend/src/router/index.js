@@ -9,10 +9,10 @@ const router = createRouter({
       component: DashboardView
     },
     {
-      path: '/add-note',
+      path: '/add-note/:id?',
       name: 'Add Note',
       component: () => import('../views/AddNoteView.vue')
-    }
+    },
   ]
 })
 

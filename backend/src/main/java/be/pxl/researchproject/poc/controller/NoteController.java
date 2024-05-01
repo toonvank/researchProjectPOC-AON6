@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/notes/")
@@ -44,12 +46,15 @@ public class NoteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Note> updateNote(@PathVariable Long id, @RequestBody NoteDTO noteDTO) {
-        return noteService.getNoteById(id).map(existingNote -> {
-            existingNote.setTitle(noteDTO.getTitle());
-            existingNote.setContent(noteDTO.getContent());
-            existingNote.setDate(new Date());
-            return ResponseEntity.ok(noteService.createOrUpdateNote(existingNote));
-        }).orElseGet(() -> ResponseEntity.notFound().build());
+        Optional<Note> note = noteService.getNoteById(id);
+        if (note.isPresent()) {
+            note.get().setTitle(noteDTO.getTitle());
+            note.get().setContent(noteDTO.getContent());
+            Note updatedNote = noteService.createOrUpdateNote(note.get());
+            return ResponseEntity.ok(updatedNote);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")

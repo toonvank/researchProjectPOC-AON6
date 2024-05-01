@@ -29,7 +29,7 @@ export const notesStore = defineStore('notes', {
             this.error = '';
             this.note = null;
             try {
-                const response = await axios.get(`${url}/${id}`);
+                const response = await axios.get(`${url}${id}`);
                 this.note = response.data;
                 this.loaded = true;
             } catch (error) {
@@ -37,7 +37,6 @@ export const notesStore = defineStore('notes', {
             }
         },
         saveNewNote(title, content) {
-            console.log(title, content);
             this.error = '';
             axios.post(`${url}`, { title, content }, {
                 headers: {
@@ -62,7 +61,7 @@ export const notesStore = defineStore('notes', {
         updateNote(id, title, content) {
             this.error = '';
             const note = { title, content };
-            axios.put(`${url}/${id}`, note)
+            axios.put(`${url}${id}`, note)
                 .then(response => {
                     const index = this.notes.findIndex(note => note.id === id);
                     if (index !== -1) {
