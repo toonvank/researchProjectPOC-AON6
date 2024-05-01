@@ -16,7 +16,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://84.195.205.124:8080',
+        target: import.meta.env.VITE_API_BASE_URL,
         changeOrigin: true,
         secure: false // This disables SSL certificate verification
       }
