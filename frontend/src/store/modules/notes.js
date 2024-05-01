@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { ref } from 'vue';
 
-const url = 'http://localhost:8080/api/notes/';
+const url = ref(import.meta.env.VITE_API_BASE_URL).value;
+console.log(url)
 
 export const notesStore = defineStore('notes', {
     state: () => ({
