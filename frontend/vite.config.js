@@ -14,6 +14,8 @@ export default defineConfig({
     }
   },
   server: {
-    https: false,
+    proxy: {
+      '/api': 'http://84.195.205.124:8080/api',
+    },
   },
 })
