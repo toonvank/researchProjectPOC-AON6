@@ -40,6 +40,8 @@
               <input
                   type="text"
                   placeholder="Search notes"
+                  v-model="searchQuery"
+                  @input="filterNotes"
                   class="bg-transparent pl-10 pr-3 py-2 w-full rounded-md border border-transparent focus:ring-2 focus:ring-primary focus:ring-offset-background focus:outline-none dark:text-gray-100">
             </div>
           </form>
@@ -70,7 +72,7 @@
           </RouterLink>
         </div>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          <NoteCard v-for="(note, index) in notes" :key="index" :note="note" />
+          <NoteCard v-for="(note, index) in filteredNotes" :key="index" :note="note" />
         </div>
       </main>
     </div>
@@ -86,7 +88,8 @@ export default {
   data(){
     const store = notesStore();
     return{
-      store
+      store,
+      searchQuery: ""
     }
   },
   computed: {
@@ -96,6 +99,16 @@ export default {
     notes() {
       return this.store.notes;
     },
+    filteredNotes() {
+      if (!this.searchQuery) {
+        return this.notes;
+      }
+      const query = this.searchQuery.toLowerCase();
+      return this.notes.filter(note =>
+          note.title.toLowerCase().includes(query) ||
+          note.content.toLowerCase().includes(query)
+      );
+    }
   },
   async mounted() {
     await this.store.fetchNotes();
