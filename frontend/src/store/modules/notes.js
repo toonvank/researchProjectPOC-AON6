@@ -3,7 +3,6 @@ import axios from 'axios';
 import { ref } from 'vue';
 
 const url = ref(import.meta.env.VITE_API_BASE_URL).value;
-console.log(url)
 
 export const notesStore = defineStore('notes', {
     state: () => ({
