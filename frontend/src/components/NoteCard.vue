@@ -20,7 +20,6 @@
               </svg>
               <span>{{ formatDate(note.date) }}</span>
             </div>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-700 hover:text-gray-200 h-10 w-10"></button>
           </div>
         </div>
       </div>
@@ -38,8 +37,12 @@ export default {
   },
   methods: {
     formatDate(dateString) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const options = {year: 'numeric', month: 'long', day: 'numeric'};
       return new Date(dateString).toLocaleDateString('en-US', options);
+    },
+    deleteNote() {
+      // Implement your delete logic here
+      console.log('Deleting note:', this.note.id);
     }
   }
 };

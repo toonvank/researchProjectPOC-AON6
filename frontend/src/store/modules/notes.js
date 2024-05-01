@@ -74,15 +74,9 @@ export const notesStore = defineStore('notes', {
         },
         deleteNote(id) {
             this.error = '';
-            axios.delete(`${url}/${id}`)
+            axios.delete(`${url}${id}`)
                 .then(response => {
                     this.notes = this.notes.filter(note => note.id !== id);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Note deleted successfully',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
                 })
                 .catch(error => {
                     this.error = error.message;
