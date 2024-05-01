@@ -6,7 +6,6 @@ import App from './App.vue'
 import router from './router'
 import './index.css'
 import Swal from 'sweetalert2';
-
 const app = createApp(App)
 
 const Toast = Swal.mixin({
