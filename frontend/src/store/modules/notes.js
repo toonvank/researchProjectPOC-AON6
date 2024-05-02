@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import { ref } from 'vue';
 
-const url = "https://pocapi.toonvank.online/"
+const url = "https://pocapi.toonvank.online/api/notes/"
 console.log(url);
 
 export const notesStore = defineStore('notes', {
