@@ -89,7 +89,7 @@ export default {
     async deleteNote() {
       if (this.noteId) {
         await this.store.deleteNote(this.noteId);
-        this.store.notes = this.store.notes.filter(note => note.id !== this.noteId);
+        await this.store.fetchNotes();
         this.$router.push('/');
       }
     },
