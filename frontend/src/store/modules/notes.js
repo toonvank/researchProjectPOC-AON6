@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { ref } from 'vue';
 
-const url = "https://pocapi.toonvank.online/api/notes/"
-console.log(url);
+const url = "https://pocapi.toonvank.online/api/notes/";
 
 export const notesStore = defineStore('notes', {
     state: () => ({
@@ -39,6 +37,10 @@ export const notesStore = defineStore('notes', {
         },
         saveNewNote(title, content) {
             this.error = '';
+            if (!title || !content) {
+                this.error = "Title and content cannot be empty.";
+                return;
+            }
             axios.post(`${url}`, { title, content }, {
                 headers: {
                     'Accept': 'application/json',
@@ -61,6 +63,10 @@ export const notesStore = defineStore('notes', {
         },
         updateNote(id, title, content) {
             this.error = '';
+            if (!title || !content) {
+                this.error = "Title and content cannot be empty.";
+                return;
+            }
             const note = { title, content };
             axios.put(`${url}${id}`, note)
                 .then(response => {

@@ -27,7 +27,10 @@ public class NoteService {
     }
 
     public Note createOrUpdateNote(Note note) {
-        Optional<Note> existingNoteOptional = noteRepository.findById(note.getId());
+        Optional<Note> existingNoteOptional = Optional.empty();
+        if (note != null && note.getId() != null) {
+            existingNoteOptional = noteRepository.findById(note.getId());
+        }
         if (existingNoteOptional.isPresent()) {
             Note existingNote = existingNoteOptional.get();
             existingNote.setTitle(note.getTitle());
