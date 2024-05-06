@@ -112,7 +112,10 @@ export default {
     }
   },
   async mounted() {
-    await this.store.fetchNotes();
+    if (!this.store.loaded) {
+      await this.store.fetchNotes();
+      this.store.loaded = true;
+    }
     this.notes = this.store.notes;
   }
 };
