@@ -72,7 +72,7 @@
         </div>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <div v-if="filteredNotes.length === 0" class="text-gray-600 dark:text-gray-400">No notes available, create a new note or adjust your search query.</div>
-          <NoteCard v-else v-for="(note, index) in notes" :key="index" :note="note" />
+          <NoteCard v-else v-for="(note, index) in filteredNotes" :key="index" :note="note" />
         </div>
       </main>
     </div>

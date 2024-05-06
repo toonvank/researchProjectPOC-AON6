@@ -14,7 +14,6 @@ export const notesStore = defineStore('notes', {
         async fetchNotes() {
             this.loaded = false;
             this.error = '';
-            this.notes = [];
             try {
                 const response = await axios.get(url);
                 this.notes = response.data;
@@ -26,7 +25,6 @@ export const notesStore = defineStore('notes', {
         async fetchNote(id) {
             this.loaded = false;
             this.error = '';
-            this.note = null;
             try {
                 const response = await axios.get(`${url}${id}`);
                 this.note = response.data;

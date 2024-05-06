@@ -9,7 +9,6 @@ export default defineConfig({
   plugins: [vue(),
     VitePWA({
       registerType: 'autoUpdate',
-      injectRegister: 'auto',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
         name: 'MemoSphere notes',

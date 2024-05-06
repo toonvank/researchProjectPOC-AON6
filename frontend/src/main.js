@@ -6,7 +6,7 @@ import App from './App.vue'
 import router from './router'
 import './index.css'
 import Swal from 'sweetalert2';
-const app = createApp(App)
+
 
 const Toast = Swal.mixin({
     toast: true,
@@ -20,10 +20,12 @@ const Toast = Swal.mixin({
     }
 });
 
+const app = createApp(App)
+
 app.config.globalProperties.$toast = Toast;
 
 
-
-app.use(createPinia())
 app.use(router)
+app.use(createPinia())
+
 app.mount('#app')
