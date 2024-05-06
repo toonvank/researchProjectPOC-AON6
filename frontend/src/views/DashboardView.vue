@@ -89,6 +89,7 @@ export default {
     const store = notesStore();
     return{
       store,
+      notes: [],
       searchQuery: ""
     }
   },
@@ -112,6 +113,7 @@ export default {
   },
   async mounted() {
     await this.store.fetchNotes();
+    this.notes = this.store.notes;
   }
 };
 </script>

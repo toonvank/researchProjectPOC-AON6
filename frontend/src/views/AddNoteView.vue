@@ -84,7 +84,11 @@ export default {
     },
     async saveAndExit() {
       await this.saveNote();
+      // Redirect to home page if there are no errors
       if (!this.store.error) this.$router.push('/');
+      // Show error message if there are errors
+      else this.showError(this.store.error);
+      // hello
     },
     async deleteNote() {
       if (this.noteId) {
