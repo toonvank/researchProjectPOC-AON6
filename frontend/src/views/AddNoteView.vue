@@ -67,7 +67,17 @@ export default {
       this.note = this.store.note
       this.note.isEditing = true
     }
-    console.log("/var/www/poc/images" + this.note.photo_url)
+    const imageUrl = "/var/www/poc/images/2933df3a-35f4-4807-b73d-b4bdca83d942.jpg";
+    try {
+      const response = await fetch(imageUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        console.log(`Can access file at ${imageUrl}`);
+      }
+    } catch (error) {
+      console.error(`Cannot access file at ${imageUrl}`);
+    }
   },
   methods: {
     async saveNote() {
