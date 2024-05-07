@@ -108,7 +108,7 @@ export default {
         showDenyButton: true,
         confirmButtonText: `Upload a photo`,
         denyButtonText: `Use the camera`,
-        imageUrl: "https://dav.toonvank.online/images/" + this.note.photo_url,
+        imageUrl: "https://dav.toonvank.online/" + this.note.photo_url,
       }).then((result) => {
         if (result.isConfirmed) {
           // Upload a photo
