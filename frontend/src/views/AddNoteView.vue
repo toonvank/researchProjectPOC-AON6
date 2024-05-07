@@ -107,7 +107,7 @@ export default {
         showDenyButton: true,
         confirmButtonText: `Upload a photo`,
         denyButtonText: `Use the camera`,
-        imageUrl: this.store.photo_url || this.note.photo_url,
+        imageUrl: "/var/www/poc/images" + this.store.photo_url || "/var/www/poc/images" + this.note.photo_url,
       }).then((result) => {
         if (result.isConfirmed) {
           // Upload a photo

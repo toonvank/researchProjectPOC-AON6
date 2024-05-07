@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,14 +39,14 @@ public class NoteController {
     }
 
     @PostMapping
-    public ResponseEntity<Note> createNote(@RequestBody NoteDTO noteDTO) {
+    public ResponseEntity<Note> createNote(@RequestBody NoteDTO noteDTO) throws IOException {
         Note note = new Note(noteDTO.getTitle(), noteDTO.getContent(), new Date(), noteDTO.getPhoto_url());
         Note savedNote = noteService.createOrUpdateNote(note);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedNote);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Note> updateNote(@PathVariable Long id, @RequestBody NoteDTO noteDTO) {
+    public ResponseEntity<Note> updateNote(@PathVariable Long id, @RequestBody NoteDTO noteDTO) throws IOException {
         Optional<Note> note = noteService.getNoteById(id);
         if (note.isPresent()) {
             note.get().setTitle(noteDTO.getTitle());
