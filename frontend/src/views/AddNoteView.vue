@@ -51,6 +51,7 @@ export default {
     let noteId;
     return {
       store,
+      uploadedImage: null,
       note: {
         title: '',
         content: '',
@@ -79,8 +80,6 @@ export default {
       }
       else {
         await this.store.fetchNotes();
-        this.store.photo_url = '';
-        this.store.photoTaken = false;
       }
     },
     async saveAndExit() {
@@ -104,33 +103,42 @@ export default {
     },
     addPhoto() {
       Swal.fire({
-        title:
-          this.store.photo_url || this.note.photo_url ? 'Update Photo' : 'Add Photo',
+        title: 'What do you want to do?',
+        showDenyButton: true,
+        confirmButtonText: `Upload a photo`,
+        denyButtonText: `Use the camera`,
         imageUrl: this.store.photo_url || this.note.photo_url,
-        inputAttributes: {
-          accept: 'image/*',
-          'aria-label': 'Upload your profile picture'
-        },
-        html: `
-      <label for="upload-input" class="btn btn-primary">Upload Photo</label>
-      <a href="/camera" class="btn btn-primary">Take Photo</a>
-    `,
-        showCancelButton: true,
-        confirmButtonText: 'Upload',
-        showLoaderOnConfirm: true,
-        preConfirm: (file) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => {
-            this.store.photo_url = reader.result;
-            this.store.photoTaken = true;
-          }
-        },
-        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Upload a photo
+          Swal.fire({
+            title: 'Upload photo',
+            input: 'file',
+            inputAttributes: {
+              accept: 'image/*',
+              'aria-label': 'Upload your profile picture'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Upload',
+            showLoaderOnConfirm: true,
+            preConfirm: (file) => {
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+              reader.onload = () => {
+                this.store.photo_url = reader.result;
+                this.store.photoTaken = true;
+              }
+            },
+            allowOutsideClick: () => !Swal.isLoading(),
+          });
+        } else if (result.isDenied) {
+          // Use the camera
+          this.$router.push('/camera');
+        }
       });
     }
   }
-};
+}
 </script>
 
 <style scoped>

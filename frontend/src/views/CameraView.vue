@@ -13,7 +13,6 @@
         this.$emit('photoTaken', { blob, image_data_url })
         this.store.photoTaken = true;
         this.store.photo_url = image_data_url;
-        console.log(this.store.photo_url);
         this.$router.go(-1);
       },
     },
