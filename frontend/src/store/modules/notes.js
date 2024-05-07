@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const url = "http://localhost:8442/api/notes/";
+const url = "https://pocapi.toonvank.online/api/notes/";
 
 export const notesStore = defineStore('notes', {
     state: () => ({
