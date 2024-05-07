@@ -35,6 +35,7 @@ public class NoteService {
             Note existingNote = existingNoteOptional.get();
             existingNote.setTitle(note.getTitle());
             existingNote.setContent(note.getContent());
+            existingNote.setPhoto_url(note.getPhoto_url());
             return noteRepository.save(existingNote);
         } else {
             return noteRepository.save(note);

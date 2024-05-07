@@ -6,6 +6,8 @@ import App from './App.vue'
 import router from './router'
 import './index.css'
 import Swal from 'sweetalert2';
+import VueCameraLib from 'vue-camera-lib'
+
 
 
 const Toast = Swal.mixin({
@@ -27,5 +29,6 @@ app.config.globalProperties.$toast = Toast;
 
 app.use(router)
 app.use(createPinia())
+app.use(VueCameraLib)
 
 app.mount('#app')

@@ -13,10 +13,18 @@ public class Note {
     private String title;
     private String content;
     private Date date;
-
-    // Constructors, getters, and setters
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String photo_url;
 
     public Note() {
+    }
+
+    public Note(String title, String content, Date date, String photo_url) {
+        this.title = title;
+        this.content = content;
+        this.date = date;
+        this.photo_url = photo_url;
     }
 
     public Note(String title, String content, Date date) {
@@ -57,5 +65,13 @@ public class Note {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getPhoto_url() {
+        return photo_url;
+    }
+
+    public void setPhoto_url(String photo_url) {
+        this.photo_url = photo_url;
     }
 }

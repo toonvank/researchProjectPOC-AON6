@@ -1,14 +1,16 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const url = "https://pocapi.toonvank.online/api/notes/";
+const url = "http://localhost:8442/api/notes/";
 
 export const notesStore = defineStore('notes', {
     state: () => ({
         notes: [],
         note: null,
         error: null,
-        loaded: false
+        loaded: false,
+        photo_url: null,
+        photoTaken: false
     }),
     actions: {
         async fetchNotes() {
@@ -27,19 +29,20 @@ export const notesStore = defineStore('notes', {
             this.error = '';
             try {
                 const response = await axios.get(`${url}${id}`);
+                console.log(response.data);
                 this.note = response.data;
                 this.loaded = true;
             } catch (error) {
                 this.error = error.message;
             }
         },
-        saveNewNote(title, content) {
+        saveNewNote(title, content, photo_url) {
             this.error = '';
             if (!title || !content) {
                 this.error = "Title and content cannot be empty.";
                 return;
             }
-            axios.post(`${url}`, { title, content }, {
+            axios.post(`${url}`, { title, content, photo_url }, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -59,13 +62,13 @@ export const notesStore = defineStore('notes', {
                     this.error = error.message;
                 });
         },
-        updateNote(id, title, content) {
+        updateNote(id, title, content, photo_url) {
             this.error = '';
             if (!title || !content) {
                 this.error = "Title and content cannot be empty.";
                 return;
             }
-            const note = { title, content };
+            const note = { title, content, photo_url};
             axios.put(`${url}${id}`, note)
                 .then(response => {
                     const index = this.notes.findIndex(note => note.id === id);

@@ -39,7 +39,7 @@ public class NoteController {
 
     @PostMapping
     public ResponseEntity<Note> createNote(@RequestBody NoteDTO noteDTO) {
-        Note note = new Note(noteDTO.getTitle(), noteDTO.getContent(), new Date());
+        Note note = new Note(noteDTO.getTitle(), noteDTO.getContent(), new Date(), noteDTO.getPhoto_url());
         Note savedNote = noteService.createOrUpdateNote(note);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedNote);
     }
@@ -50,6 +50,7 @@ public class NoteController {
         if (note.isPresent()) {
             note.get().setTitle(noteDTO.getTitle());
             note.get().setContent(noteDTO.getContent());
+            note.get().setPhoto_url(noteDTO.getPhoto_url());
             Note updatedNote = noteService.createOrUpdateNote(note.get());
             return ResponseEntity.ok(updatedNote);
         } else {

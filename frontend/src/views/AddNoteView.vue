@@ -22,12 +22,12 @@
             placeholder="Start writing your note..."
         ></textarea>
         <div class="flex justify-between">
-          <button @click="saveNote" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white w-36 h-10 hover:bg-opacity-90">
-            Save
-          </button>
           <button @click="$router.push('/')"
                   class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white w-36 h-10 hover:bg-opacity-90">
             Cancel
+          </button>
+          <button @click="addPhoto" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white w-36 h-10 hover:bg-opacity-90">
+            {{ this.note.photo_url || this.store.photo_url ? 'Update Photo' : 'Add Photo' }}
           </button>
           <button @click="saveAndExit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-white w-36 h-10 hover:bg-opacity-90">
             Save & Exit
@@ -70,25 +70,23 @@ export default {
   methods: {
     async saveNote() {
       if (this.noteId) {
-        this.store.updateNote(this.noteId, this.note.title, this.note.content)
+        this.store.updateNote(this.noteId, this.note.title, this.note.content, this.store.photo_url)
       } else {
-        this.store.saveNewNote(this.note.title, this.note.content)
+        this.store.saveNewNote(this.note.title, this.note.content, this.store.photo_url)
       }
       if (this.store.error) {
-        console.log(this.store.error);
         this.showError(this.store.error);
       }
       else {
         await this.store.fetchNotes();
+        this.store.photo_url = '';
+        this.store.photoTaken = false;
       }
     },
     async saveAndExit() {
       await this.saveNote();
-      // Redirect to home page if there are no errors
       if (!this.store.error) this.$router.push('/');
-      // Show error message if there are errors
       else this.showError(this.store.error);
-      // hello
     },
     async deleteNote() {
       if (this.noteId) {
@@ -102,6 +100,33 @@ export default {
         icon: 'error',
         title: 'Oops...',
         text: message,
+      });
+    },
+    addPhoto() {
+      Swal.fire({
+        title:
+          this.store.photo_url || this.note.photo_url ? 'Update Photo' : 'Add Photo',
+        imageUrl: this.store.photo_url || this.note.photo_url,
+        inputAttributes: {
+          accept: 'image/*',
+          'aria-label': 'Upload your profile picture'
+        },
+        html: `
+      <label for="upload-input" class="btn btn-primary">Upload Photo</label>
+      <a href="/camera" class="btn btn-primary">Take Photo</a>
+    `,
+        showCancelButton: true,
+        confirmButtonText: 'Upload',
+        showLoaderOnConfirm: true,
+        preConfirm: (file) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            this.store.photo_url = reader.result;
+            this.store.photoTaken = true;
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
       });
     }
   }

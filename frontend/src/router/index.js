@@ -13,6 +13,11 @@ const router = createRouter({
       name: 'Add Note',
       component: () => import('../views/AddNoteView.vue')
     },
+    {
+      path: '/camera',
+      name: 'Take Photo',
+      component: () => import('../views/CameraView.vue')
+    }
   ]
 })
 
