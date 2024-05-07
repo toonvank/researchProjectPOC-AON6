@@ -67,17 +67,6 @@ export default {
       this.note = this.store.note
       this.note.isEditing = true
     }
-    const imageUrl = "/var/www/poc/images/2933df3a-35f4-4807-b73d-b4bdca83d942.jpg";
-    try {
-      const response = await fetch(imageUrl);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      } else {
-        console.log(`Can access file at ${imageUrl}`);
-      }
-    } catch (error) {
-      console.error(`Cannot access file at ${imageUrl}`);
-    }
   },
   methods: {
     async saveNote() {
@@ -118,7 +107,7 @@ export default {
         showDenyButton: true,
         confirmButtonText: `Upload a photo`,
         denyButtonText: `Use the camera`,
-        imageUrl: this.store.photo_url || "/var/www/poc/images/" + this.note.photo_url,
+        imageUrl: "/var/www/poc/images/2933df3a-35f4-4807-b73d-b4bdca83d942.jpg",
       }).then((result) => {
         if (result.isConfirmed) {
           // Upload a photo
