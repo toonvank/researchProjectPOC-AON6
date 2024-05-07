@@ -107,7 +107,7 @@ export default {
         showDenyButton: true,
         confirmButtonText: `Upload a photo`,
         denyButtonText: `Use the camera`,
-        imageUrl: "/var/www/poc/images/2933df3a-35f4-4807-b73d-b4bdca83d942.jpg",
+        imageUrl: this.store.photo_url || "http://84.195.205.124/images/" + this.note.photo_url,
       }).then((result) => {
         if (result.isConfirmed) {
           // Upload a photo
