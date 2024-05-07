@@ -67,6 +67,7 @@ export default {
       this.note = this.store.note
       this.note.isEditing = true
     }
+    console.log("/var/www/poc/images" + this.note.photo_url)
   },
   methods: {
     async saveNote() {
@@ -107,7 +108,7 @@ export default {
         showDenyButton: true,
         confirmButtonText: `Upload a photo`,
         denyButtonText: `Use the camera`,
-        imageUrl: "/var/www/poc/images" + this.store.photo_url || "/var/www/poc/images" + this.note.photo_url,
+        imageUrl: this.store.photo_url || "/var/www/poc/images" + this.note.photo_url,
       }).then((result) => {
         if (result.isConfirmed) {
           // Upload a photo
