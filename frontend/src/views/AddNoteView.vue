@@ -67,7 +67,6 @@ export default {
       this.note = this.store.note
       this.note.isEditing = true
     }
-    console.log("https://dav.toonvank.online/images/" + this.note.photo_url)
   },
   methods: {
     async saveNote() {

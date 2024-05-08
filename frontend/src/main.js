@@ -7,6 +7,8 @@ import router from './router'
 import './index.css'
 import Swal from 'sweetalert2';
 import VueCameraLib from 'vue-camera-lib'
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
 
 
 
@@ -23,6 +25,7 @@ const Toast = Swal.mixin({
 });
 
 const app = createApp(App)
+defineCustomElements(window);
 
 app.config.globalProperties.$toast = Toast;
 

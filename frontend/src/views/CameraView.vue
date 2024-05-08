@@ -1,29 +1,35 @@
 <script>
-  import {notesStore} from "@/store/modules/notes.js";
+import { ref } from 'vue';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
-  export default {
-    data() {
-      const store = notesStore();
-      return {
-        store,
-      }
-    },
-    methods: {
-      photoTakenEvent({ blob, image_data_url }) {
-        this.$emit('photoTaken', { blob, image_data_url })
-        this.store.photoTaken = true;
-        this.store.photo_url = image_data_url;
-        this.$router.go(-1);
-      },
-    },
-    mounted() {
-      this.store.photoTaken = false;
-    }
+export default {
+  setup() {
+    const imageUrl = ref(undefined);
+
+    const takePicture = async () => {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: true,
+        resultType: CameraResultType.Uri
+      });
+
+      imageUrl.value = image.webPath;
+    };
+
+    return {
+      imageUrl,
+      takePicture
+    };
   }
+};
 </script>
 
+
 <template>
-  <WebCamUI :fullscreenState="true"  @photoTaken="photoTakenEvent" />
+  <div>
+    <button @click="takePicture">Take Picture</button>
+    <img v-if="imageUrl" :src="imageUrl" />
+  </div>
 </template>
 
 <style scoped>
